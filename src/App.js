@@ -1,25 +1,39 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from "react";
+import {Switch, Route} from "react-router-dom";
+import {connect} from "react-redux";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import Gallery from "./components/gallery";
+import Login from "./components/auth/login";
+import {GuardedRoute} from "./helper";
+
+import "./App.css";
+
+class App extends Component {
+    render() {
+        const {loggedIn} = this.props.auth;
+
+        return (
+            <Switch>
+                <Route path="/login" exact component={Login} />
+                <GuardedRoute
+                    path="/"
+                    exact
+                    component={Gallery}
+                    auth={loggedIn}
+                />
+                <Route
+                    path="*"
+                    render={() => (
+                        <h1 className="text-center my-5">Page not Found</h1>
+                    )}
+                />
+            </Switch>
+        );
+    }
 }
 
-export default App;
+const mapStateToProps = (state) => ({
+    ...state,
+});
+
+export default connect(mapStateToProps)(App);

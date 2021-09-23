@@ -1,0 +1,8 @@
+{
+    "gallery": {
+      "update": {
+          "error" : "user gallery item cannot be more than 9 items",
+          "sucess" : "photos has been updated successfully"
+      }
+    }
+  }

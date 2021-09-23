@@ -3,11 +3,14 @@ import {Route, Redirect} from "react-router-dom";
 
 export function getApitoken() {
     let authState = JSON.parse(localStorage.getItem("auth"));
-    return authState.response.user.api_token;
+    if (authState)
+        return authState.response.user.api_token;
+    else 
+        return null;
 };
 
 export function getApiUrl() {
-    return "http://127.0.0.1:8000/api/";
+    return process.env.REACT_APP_BACKEND_ENDPOINT;
 };
 
 export function getDefaultAuthHeader(config = {}) {
@@ -15,6 +18,7 @@ export function getDefaultAuthHeader(config = {}) {
         headers: {
             ...config,
             Accept : 'application/json',
+            Authorization: `Bearer ${getApitoken()}`
         }
     }
 };

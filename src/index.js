@@ -13,6 +13,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "font-awesome/css/font-awesome.min.css";
 import {initFacebookSdk} from './services/initFacebookSdk';
 import store from './store';
+require('dotenv').config();
 
 const history = createBrowserHistory();
 

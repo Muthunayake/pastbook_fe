@@ -1,14 +1,16 @@
 const facebookAppId = process.env.REACT_APP_FACEBOOK_APP_ID;
+const facebookAppVersion = process.env.REACT_APP_FACEBOOK_APP_VERSION;
+const facebookAppSdk = process.env.REACT_APP_FACEBOOK_SDK;
 
 export function initFacebookSdk() {
     return new Promise(resolve => {
         // wait for facebook sdk to initialize before starting the react app
         window.fbAsyncInit = function () {
             window.FB.init({
-                appId: 274614244479850,
+                appId: facebookAppId,
                 cookie: true,
                 xfbml: true,
-                version: 'v8.0'
+                version: facebookAppVersion
             });
 
             resolve();
@@ -19,7 +21,7 @@ export function initFacebookSdk() {
             var js, fjs = d.getElementsByTagName(s)[0];
             if (d.getElementById(id)) { return; }
             js = d.createElement(s); js.id = id;
-            js.src = "https://connect.facebook.net/en_US/sdk.js";
+            js.src = facebookAppSdk;
             fjs.parentNode.insertBefore(js, fjs);
         }(document, 'script', 'facebook-jssdk'));    
     });

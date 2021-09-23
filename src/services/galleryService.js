@@ -1,29 +1,33 @@
 import axios from 'axios';
-import {getDefaultAuthHeader, getApiUrl, getApitoken} from "../helper";
-import {fetchAll, saveStatus} from "../actions/galleryActions";
+import {getDefaultAuthHeader, getApiUrl} from "../helper";
+import {fetchAll, saveStatus, setError} from "../actions/galleryActions";
+import {ALERT_TIME} from "../constants/constant";
 
 export const loadPhotos = () => dispatch => {
     axios.get(
-        `${getApiUrl()}gallery/all?api_token=${getApitoken()}`,
+        `${getApiUrl()}gallery/all`,
+        getDefaultAuthHeader()
     )
     .then((response) => {
-        if(response) dispatch(fetchAll(response))
+        if(response) dispatch(fetchAll(response));
     });
 };
 
 export const savePhotos = (data) => dispatch => {
-    dispatch(saveStatus(true))
+    dispatch(saveStatus(true));
     axios.post(
         `${getApiUrl()}gallery/create`,
-        {
-            api_token: getApitoken(),
-            data
-        },
+        {photos: data},
         getDefaultAuthHeader()
     )
     .then((response) => {
         setTimeout(() => {
             if (response) dispatch(saveStatus(false));
-        }, 3000);
+        }, ALERT_TIME);
+    }).catch(error => {
+        dispatch(saveStatus(false));
+        if (error.response) {
+            dispatch(setError(error.response.data.errors.photos[0]));
+        }
     });
 };

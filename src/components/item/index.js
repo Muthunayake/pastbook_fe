@@ -17,15 +17,15 @@ class Item extends PureComponent {
         const {image, id, checked} = this.props;
 
         return (
-            <div className="p-0" style={{width: '8rem'}}>   
+            <div className="p-0 py-1" style={{width: '8rem'}}>   
                 <a href={image} target="_blank">
                     <img
                         src={image}
-                        className="img-thumbnail custom-thumbnail"
+                        className="custom-thumbnail rounded shadow-1-strong"
                     /> 
                 </a> 
                 <input
-                    className="form-check-input"
+                    className="form-check-input mx-1"
                     type="checkbox"
                     value={id}
                     checked={checked}

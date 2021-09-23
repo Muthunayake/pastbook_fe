@@ -1,4 +1,4 @@
-import {FETCH_ALL, SAVE_STATUS} from "../constants/actionType";
+import {FETCH_ALL, SAVE_STATUS, GALLERY_ERROR, CLEAR_GALLERY_ERROR} from "../constants/actionType";
 
 const initState = {photos: [], saveStatus: false};
 
@@ -13,6 +13,16 @@ export function gallery(state = initState, action) {
             return {
                 ...state,
                 saveStatus: action.payload
+            };
+        case GALLERY_ERROR:
+            return {
+                ...state,
+                galleryError: action.payload
+            };
+        case CLEAR_GALLERY_ERROR:
+            return {
+                ...state,
+                galleryError: null
             };
         default:
             return state;

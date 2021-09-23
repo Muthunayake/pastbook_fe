@@ -26,7 +26,7 @@ export const savePhotos = (data) => dispatch => {
         }, ALERT_TIME);
     }).catch(error => {
         dispatch(saveStatus(false));
-        if (error.response) {
+        if (error.response && error.response.status === 422) {
             dispatch(setError(error.response.data.errors.photos[0]));
         }
     });

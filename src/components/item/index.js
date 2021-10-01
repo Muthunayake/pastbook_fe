@@ -2,10 +2,6 @@ import React, {PureComponent} from "react";
 import PropTypes from 'prop-types';
 
 class Item extends PureComponent {
-    constructor() {
-        super();
-    }
-
     onChange = (event) => {
         this.props.onChange({
             ...this.props,
@@ -18,8 +14,9 @@ class Item extends PureComponent {
 
         return (
             <div className="p-0 py-1" style={{width: '8rem'}}>   
-                <a href={image} target="_blank">
+                <a href={image} target="_blank" rel="noreferrer">
                     <img
+                        alt="no-preview"
                         src={image}
                         className="custom-thumbnail rounded shadow-1-strong"
                     /> 
@@ -40,7 +37,6 @@ Item.propTypes = {
     image: PropTypes.string,
     checked: PropTypes.any,
 };
-
 
 Item.defaultProps = {
     image: PropTypes.string,

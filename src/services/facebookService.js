@@ -1,4 +1,3 @@
-import axios from 'axios';
 import {login, status} from "../actions/authActions";
 import {setPhotos} from "../actions/facebookActions";
 import {authenticate} from './authService';
@@ -41,12 +40,11 @@ export const getPhotos = (num) => dispatch => {
     window.FB.api(`/me?fields=albums{name,count,photos.limit(${photoLimit}){images,likes}}`, response => {  
         if (response.hasOwnProperty('error')) {
             photos = JSON.parse(localStorage.getItem("photos"));
-            dispatch(setPhotos({photos}));
         } else {
             photos = formatPhotos(response);
-            localStorage.setItem("photos", JSON.stringify(photos));
-            dispatch(setPhotos({photos}));
+            localStorage.setItem("photos", JSON.stringify(photos));          
         }
+        dispatch(setPhotos({photos}));
     });
 };
 
@@ -55,13 +53,13 @@ const formatPhotos = response => {
     if (response.hasOwnProperty('error')) return [];
 
     const photos = response.albums.data;
-    let formatPhotos = [];
+    const tempPhotos = [];
 
     photos.forEach((album) => {
         if (album.count === 0) return;
 
         album.photos.data.forEach((photo) => {
-            formatPhotos.push({
+            tempPhotos.push({
                 id: photo.id,
                 image: photo.images.length > 0 ? photo.images[0].source : '',
                 album: album.name
@@ -69,5 +67,5 @@ const formatPhotos = response => {
         });
     });
 
-    return formatPhotos;
+    return tempPhotos;
 };

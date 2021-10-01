@@ -42,23 +42,22 @@ class Gallery extends Component {
                     this.setDefaultPhotos();
                 }
             });
-        };
+        }
         
         if (gallery.photos !== prevProps.gallery.photos) {
             this.setState({selectedPhotos: gallery.photos});
-        };
+        }
     };
 
     handleSelectedPhotos = (params) => {
         const {type, id, checked} = params;
-        let photos = this.state[type];
+        const photos = this.state[type];
 
-        if (checked)
-            photos.push(id);
-        else 
-            photos = photos.filter(temp => temp != id);
+        checked ?
+            photos.push(id) :
+            remove(photos, photo => photo === id);
         
-        this.setState({[type] :photos});
+        this.setState({[type]: photos});
     };
 
     getItems = (type, photos, event) => {
@@ -79,10 +78,7 @@ class Gallery extends Component {
 
     setSelectedPhoto = () => {
         const {photos, selectingPhotos, selectedPhotos} = this.state;
-
-        let removed = remove(photos, function(photo) {
-            return selectingPhotos.includes(photo.id);
-        });
+        const removedPhotos = remove(photos, photo => selectingPhotos.includes(photo.id));
 
         if (selectedPhotos.length + selectingPhotos.length > PHOTO_LIMIT) {
             this.props.setError(MESSAGES.gallery.update.error);
@@ -91,7 +87,7 @@ class Gallery extends Component {
         }
 
         this.setState(state => ({
-            selectedPhotos: [...state.selectedPhotos, ...removed],
+            selectedPhotos: [...state.selectedPhotos, ...removedPhotos],
             photos,
             selectingPhotos: []
         }), () => {
@@ -107,13 +103,10 @@ class Gallery extends Component {
 
     removeSelectedPhoto = () => {
         const {removingPhotos, selectedPhotos} = this.state;
-
-        let removed = remove(selectedPhotos, function(photo) {
-            return removingPhotos.includes(photo.id);
-        });
+        const removedPhotos = remove(selectedPhotos, photo => removingPhotos.includes(photo.id));
 
         this.setState(state => ({
-            photos: [...state.photos, ...removed],
+            photos: [...state.photos, ...removedPhotos],
             selectedPhotos,
             removingPhotos: []
         }), () => {

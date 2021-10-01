@@ -22,7 +22,7 @@ const userGallery = props => {
                                     <button 
                                         className="btn btn-danger float-end btn-sm"
                                         onClick={removeSelectedPhoto}
-                                        disabled={removingPhotos.length == 0}
+                                        disabled={removingPhotos.length === 0}
                                     >
                                         { removingPhotos.length > 0 ? `(${removingPhotos.length})` : ''}  Remove
                                     </button>

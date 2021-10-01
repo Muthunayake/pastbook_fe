@@ -18,7 +18,7 @@ const facebookGallery = (props) => {
                         <button
                             className="btn btn-primary float-end btn-sm"
                             onClick={setSelectedPhoto}
-                            disabled={selectingPhotos.length == 0}
+                            disabled={selectingPhotos.length === 0}
                         >
                             {
                                 selectingPhotos.length > 0

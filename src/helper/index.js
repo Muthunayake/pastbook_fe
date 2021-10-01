@@ -2,7 +2,7 @@ import React from "react";
 import {Route, Redirect} from "react-router-dom";
 
 export function getApitoken() {
-    let authState = JSON.parse(localStorage.getItem("auth"));
+    const authState = JSON.parse(localStorage.getItem("auth"));
     if (authState)
         return authState.response.user.api_token;
     else 

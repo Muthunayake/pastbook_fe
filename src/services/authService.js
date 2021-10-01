@@ -9,8 +9,7 @@ export const authenticate = (accessToken, data) => dispatch => {
             email: data.email,
             password: data.email,
             api_token: accessToken,
-        },
-        getDefaultAuthHeader()
+        }
     )
     .then((response) => {
         if (response) {
